@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ue;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UeController extends Controller
 {
@@ -14,7 +15,7 @@ class UeController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Ues/Index',['ecus'=>Ue::paginate()]);
     }
 
     /**

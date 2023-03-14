@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EcuController;
+use App\Http\Controllers\UeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,6 +35,7 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::get('/ecus',[EcuController::class,'index'])->name('ecus');
+    Route::get('/ues',[UeController::class,'index'])->name('ues');
     
 });
 

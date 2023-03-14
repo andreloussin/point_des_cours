@@ -1,7 +1,7 @@
 <template>
   <app-layout>
     <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-gray-800">ECUES</h2>
+      <h2 class="text-xl font-semibold leading-tight text-gray-800">UES</h2>
     </template>
 
     <div class="py-12">
@@ -30,7 +30,7 @@
                         >
                           <span
                             class="inline-flex py-3 px-6 w-full justify-between"
-                            @click="sort('city')"
+                            @click="sort('nom')"
                           >
                             NOM
                             <svg
@@ -72,11 +72,6 @@
                         <th
                           scope="col"
                           class="py-3 px-6 w-3/12 text-xs font-semibold tracking-wider text-left text-white uppercase"
-                        >Enseignant</th>
-
-                        <th
-                          scope="col"
-                          class="py-3 px-6 w-3/12 text-xs font-semibold tracking-wider text-left text-white uppercase"
                         >Action</th>
                       </tr>
                     </thead>
@@ -95,16 +90,12 @@
                           class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap"
                         >{{ ecu.masse_horaire_ecoule }}</td>
 
-                        <td
-                          class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap"
-                        >{{ ecu.nom_enseignant }}</td>
-
                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
                           <SecondaryButton type="button" class="mt-2" @click.prevent="edit">
                             <NavLink
                               :href="route('dashboard')"
                               :active="route().current('dashboard')"
-                            >Ajouter d'heures</NavLink>
+                            >Ouvrir</NavLink>
                           </SecondaryButton>
                         </td>
                       </tr>
@@ -146,6 +137,11 @@ export default {
         direction: ""
       }
     };
+  },
+  methods: {
+    edit() {
+      console.log("test");
+    }
   }
 };
 </script>
