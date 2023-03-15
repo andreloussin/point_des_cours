@@ -88,7 +88,7 @@
 
                         <td
                           class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap"
-                        >{{ ue.masse_horaire_ecoule }}</td>
+                        >{{ ue.ecus_sum_masse_horaire_ecoule }}</td>
 
                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
                           <SecondaryButton type="button" class="mt-2" @click.prevent="edit">

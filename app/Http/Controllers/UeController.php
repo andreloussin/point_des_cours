@@ -15,7 +15,7 @@ class UeController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Ues/Index',['ues'=>Ue::paginate()]);
+        return Inertia::render('Ues/Index',['ues'=>Ue::withSum('ecus', 'masse_horaire_ecoule')->paginate()]);
     }
 
     /**

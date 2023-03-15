@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Ue extends Model
 {
     use HasFactory;
+
+    public function ecus()
+    {
+        return $this->hasMany(Ecu::class);
+    }
 }
