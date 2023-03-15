@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Ecu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class EcuController extends Controller
@@ -15,7 +17,14 @@ class EcuController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Ecus/Index',['ecus'=>Ecu::paginate()]);
+        $resp = false;
+        try {
+            $resp = DB::table('etudiant_responsables')
+                ->where('user_id', '=', Auth::user()->id)
+                ->count() > 0;
+        } catch (\Throwable $th) {
+        }
+        return Inertia::render('Ecus/Index', ['ecus' => Ecu::paginate(),'can_edit'=>$resp]);
     }
 
     /**
@@ -56,9 +65,9 @@ class EcuController extends Controller
      * @param  \App\Models\Ecu  $ecu
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ecu $ecu)
+    public function edit($ecu_id)
     {
-        //
+        return Inertia::render('Ecus/Edit', ['ecu' => Ecu::find($ecu_id)]);
     }
 
     /**
@@ -68,9 +77,15 @@ class EcuController extends Controller
      * @param  \App\Models\Ecu  $ecu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ecu $ecu)
+    public function update(Request $request,$ecu_id)
     {
-        //
+        $ecu =  Ecu::find($ecu_id);
+        $heures = $request->input('heures');
+        if($ecu && $heures){
+            $ecu->masse_horaire_ecoule = $ecu->masse_horaire_ecoule + $heures;
+            $ecu->save();
+        }
+        return  redirect()->route('ecus');;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EcuController;
 use App\Http\Controllers\UeController;
+use App\Http\Middleware\IsResponsable;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,12 +19,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect('dashboard');
 });
 
 Route::middleware([
@@ -35,6 +31,8 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::get('/ecus',[EcuController::class,'index'])->name('ecus');
+    Route::get('/ecus/{ecu_id}/edit',[EcuController::class,'edit'])->name('ecus.edit')->middleware(IsResponsable::class);
+    Route::put('/ecus/{ecu_id}/update',[EcuController::class,'update'])->name('ecus.update')->middleware(IsResponsable::class);
     Route::get('/ues',[UeController::class,'index'])->name('ues');
     
 });
