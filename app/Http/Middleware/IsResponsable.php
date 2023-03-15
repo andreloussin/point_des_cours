@@ -18,6 +18,7 @@ class IsResponsable
      */
     public function handle(Request $request, Closure $next)
     {
+        return $next($request);
         $resp = false;
         try {
             $resp = DB::table('etudiant_responsables')
