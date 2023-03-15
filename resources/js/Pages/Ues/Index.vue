@@ -77,24 +77,23 @@
                     </thead>
 
                     <tbody class="bg-white divide-y divide-gray-200">
-                      <tr v-for="(ecu) in ecus.data" :key="ecu.id">
+                      <tr v-for="(ue) in ues.data" :key="ue.id">
                         <td
                           class="py-4 px-6 text-sm font-semibold text-gray-900 whitespace-nowrap"
-                        >{{ ecu.nom }}</td>
+                        >{{ ue.nom }}</td>
 
                         <td
                           class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap"
-                        >{{ ecu.masse_horaire_total }}</td>
+                        >{{ ue.masse_horaire_total }}</td>
 
                         <td
                           class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap"
-                        >{{ ecu.masse_horaire_ecoule }}</td>
+                        >{{ ue.masse_horaire_ecoule }}</td>
 
                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
                           <SecondaryButton type="button" class="mt-2" @click.prevent="edit">
                             <NavLink
-                              :href="route('dashboard')"
-                              :active="route().current('dashboard')"
+                              :href="route('ecus',{'ue_id':ue.id})"
                             >Ouvrir</NavLink>
                           </SecondaryButton>
                         </td>
@@ -127,7 +126,7 @@ export default {
     NavLink
   },
   props: {
-    ecus: Object
+    ues: Object
   },
   data() {
     return {

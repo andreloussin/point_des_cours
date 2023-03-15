@@ -15,16 +15,24 @@ class EcuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $resp = false;
-        try {
-            $resp = DB::table('etudiant_responsables')
-                ->where('user_id', '=', Auth::user()->id)
-                ->count() > 0;
-        } catch (\Throwable $th) {
+            try {
+                $resp = DB::table('etudiant_responsables')
+                    ->where('user_id', '=', Auth::user()->id)
+                    ->count() > 0;
+            } catch (\Throwable $th) {
+            }
+        $l= [];
+        $ue_id = $request->input('ue_id');
+        if ($ue_id) {
+            $l=Ecu::where('ue_id', '=', $ue_id)->paginate();
+        } else {
+            $l=Ecu::paginate();
         }
-        return Inertia::render('Ecus/Index', ['ecus' => Ecu::paginate(),'can_edit'=>$resp]);
+        return Inertia::render('Ecus/Index', ['ecus' => $l, 'can_edit' => $resp]);
     }
 
     /**
@@ -77,11 +85,11 @@ class EcuController extends Controller
      * @param  \App\Models\Ecu  $ecu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$ecu_id)
+    public function update(Request $request, $ecu_id)
     {
         $ecu =  Ecu::find($ecu_id);
         $heures = $request->input('heures');
-        if($ecu && $heures){
+        if ($ecu && $heures) {
             $ecu->masse_horaire_ecoule = $ecu->masse_horaire_ecoule + $heures;
             $ecu->save();
         }

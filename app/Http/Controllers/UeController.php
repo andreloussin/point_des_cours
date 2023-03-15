@@ -15,7 +15,7 @@ class UeController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Ues/Index',['ecus'=>Ue::paginate()]);
+        return Inertia::render('Ues/Index',['ues'=>Ue::paginate()]);
     }
 
     /**
